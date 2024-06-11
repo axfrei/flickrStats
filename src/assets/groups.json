@@ -54,5 +54,88 @@
                 "secondChanceCount": 3
             }
         ]
+    },
+    {
+        "name": "DSLR Autofocus",
+        "groups":[
+            {
+                "nsid": "3208450@N22",
+                "name": "DSLR Autofocus Level 1",
+                "commentMatch": "Seen in DSLR Autofocus Level 1",
+                "commentCount": 5,
+                "secondChanceCount": 3,
+                "nextGroup": "3110754@N23"
+            },
+            {
+                "nsid": "3110754@N23",
+                "name": "DSLR Autofocus Level 2",
+                "commentMatch": "Seen in DSLR Autofocus Level 2",
+                "commentCount": 5,
+                "secondChanceCount": 3,
+                "nextGroup": "3069304@N24"
+            },
+            {
+                "nsid": "3069304@N24",
+                "name": "DSLR Autofocus Level 3",
+                "commentMatch": "Seen in DSLR Autofocus Level 3",
+                "commentCount": 5,
+                "secondChanceCount": 3,
+                "nextGroup": "3062455@N20"
+            },
+            {
+                "nsid": "3062455@N20",
+                "name": "DSLR Autofocus Level 4",
+                "commentMatch": "Seen in DSLR Autofocus Level 4",
+                "commentCount": 5,
+                "secondChanceCount": 3,
+                "nextGroup": "3080976@N20"
+            },
+            {
+                "nsid": "3080976@N20",
+                "name": "DSLR Autofocus Level 5",
+                "commentMatch": "Seen in DSLR Autofocus Level 5",
+                "commentCount": 5,
+                "secondChanceCount": 3,
+                "nextGroup": "3110784@N23"
+            },
+            {
+                "nsid": "3110784@N23",
+                "name": "DSLR Autofocus Level 6",
+                "commentMatch": "Seen in DSLR Autofocus Level 6",
+                "commentCount": 5,
+                "secondChanceCount": 3,
+                "nextGroup": "3109106@N21"
+            },
+            {
+                "nsid": "3109106@N21",
+                "name": "DSLR Autofocus Level 7",
+                "commentMatch": "Seen in DSLR Autofocus Level 7",
+                "commentCount": 5,
+                "secondChanceCount": 3,
+                "nextGroup": "3145578@N22"
+            },
+            {
+                "nsid": "3145578@N22",
+                "name": "DSLR Autofocus Hall of Fame",
+                "commentMatch": "Seen in DSLR Autofocus Hall of Fame",
+                "commentCount": 10,
+                "secondChanceCount": 8,
+                "nextGroup": "4177907@N24"
+            },
+            {
+                "nsid": "4177907@N24",
+                "name": "DSLR Autofocus MASTER OF PHOTOGRAPHY",
+                "commentMatch": "DSLR Master of photography",
+                "commentCount": 10,
+                "secondChanceCount": 8,
+                "nextGroup": "2938321@N23"
+            },
+            {
+                "nsid": "2938321@N23",
+                "name": "DSLR Grandmaster of Photography",
+                "commentMatch": "DSLR Master of photography",
+                "nextGroup": "END"
+            }
+        ]
     }
 ]

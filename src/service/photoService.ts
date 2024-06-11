@@ -88,6 +88,10 @@ export const suggestActions = async (user_id: string = '21856482@N05') => {
 }
 
 const meetRules = (comments, group, pool, photo, groupFamily, suggestions = []) => {
+    if(group.nextGroup === 'END') {
+        return suggestions;
+    }
+    
     const photoGroupComments = comments.comment.filter(comment => comment._content.search(group.commentMatch) >= 0);
     const meetRuleMinCommentCount = photoGroupComments && photoGroupComments.length >= group.commentCount;
     const meetSecondChance = !meetRuleMinCommentCount && photoGroupComments && photoGroupComments.length >= group.secondChanceCount;
