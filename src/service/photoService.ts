@@ -2,6 +2,7 @@ import { createFlickr } from "flickr-sdk"
 import { isEmpty } from 'lodash';
 import groupFamilies from '../assets/groups.json';
 import { NodeCacheTs } from 'node-cache-ts';
+import { PhotoSuggestion } from "../types/types";
 
 const { flickr } = createFlickr("d3dfe4509e2631a6b7ced57f4c0f7745")
 
@@ -63,7 +64,7 @@ export const getPublicGroups = async (user_id: string) => {
 }
 
 export const suggestActions = async (user_id: string = '21856482@N05') => {
-    let suggestions = [];
+    const suggestions = {};
     for (const groupFamily of groupFamilies) {
         console.log(`Checking group family ${groupFamily.name}`)
         const level0 = groupFamily.groups[0];
@@ -71,7 +72,14 @@ export const suggestActions = async (user_id: string = '21856482@N05') => {
         for await (const photo of photos) {
             const { comments } = await getPhotoComments(photo.id);
             const { pool } = await getAllContexts(photo.id);
-            suggestions = [...suggestions, ...meetRules(comments, level0, pool, photo, groupFamily)];
+            const photoSuggestion: PhotoSuggestion = suggestions[photo.id] || {
+                id: photo.id,
+                title: photo.title,
+                url: `https://www.flickr.com/photos/${photo.owner}/${photo.id}`,
+                suggestions: []
+             }
+             photoSuggestion.suggestions = [...photoSuggestion.suggestions, ...meetRules(comments, level0, pool, photo, groupFamily)];
+             !isEmpty(photoSuggestion.suggestions) && (suggestions[photo.id] = photoSuggestion);
         };
     }
 
@@ -87,21 +95,13 @@ const meetRules = (comments, group, pool, photo, groupFamily, suggestions = []) 
 
 
     if (meetRuleMinCommentCount && meetRuleNotAlreadyInNextGroup) {
-        suggestions.push({
-            id: photo.id,
-            title: photo.title,
-            url: `https://www.flickr.com/photos/${photo.owner}/${photo.id}`,
-            suggestion: !isEmpty(group.nextGroup) ? `Promote to ${groupFamily.groups.find(g => g.nsid === group.nextGroup).name}` : `Please check ${groupFamily.name}`
-        })
+        suggestions.push(
+            !isEmpty(group.nextGroup) ? `Promote to ${groupFamily.groups.find(g => g.nsid === group.nextGroup).name}` : `Please check ${groupFamily.name}`
+        )
     }
 
     if(meetSecondChance) {
-        suggestions.push({
-            id: photo.id,
-            title: photo.title,
-            url: `https://www.flickr.com/photos/${photo.owner}/${photo.id}`,
-            suggestion: `Post to second chance to ${group.name}`
-        })
+        suggestions.push(`Post to second chance to ${group.name}`)
     }
 
     if (meetRuleMinCommentCount && !meetRuleNotAlreadyInNextGroup && !isEmpty(group.nextGroup)) {
