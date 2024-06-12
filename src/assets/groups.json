@@ -1,117 +1,97 @@
 [
     {
         "name": "! !^A Little Bit of Soap",
+        "commentCount": 5,
+        "secondChanceCount": 3,
         "groups": [
             {
                 "nsid": "1167706@N24",
                 "name": "! !^A Little Bit of Soap Level 1",
                 "commentMatch": "Seen in A Little Bit Of Soap Level 1",
-                "commentCount": 5,
-                "secondChanceCount": 3,
                 "nextGroup": "2759861@N21"
             },
             {
                 "nsid": "2759861@N21",
                 "name": "! !^A Little Bit of Soap Level 2",
                 "commentMatch": "Seen in A Little Bit Of Soap Level 2",
-                "commentCount": 5,
-                "secondChanceCount": 3,
                 "nextGroup": "2769605@N21"
             },
             {
                 "nsid": "2769605@N21",
                 "name": "! !^A Little Bit of Soap Level 3",
                 "commentMatch": "Seen in A Little Bit Of Soap Level 3",
-                "commentCount": 5,
-                "secondChanceCount": 3
             }
         ]
     },
     {
         "name": "! !^Good Morning Happiness",
+        "commentCount": 5,
+        "secondChanceCount": 3,
         "groups": [
             {
                 "nsid": "1037442@N22",
                 "name": "! !^Good Morning Happiness Level 1",
                 "commentMatch": "Admired in <a href=\"https://www.flickr.com/groups/flickrriver//\">Good Morning Happiness</a>",
-                "commentCount": 5,
-                "secondChanceCount": 3,
                 "nextGroup": "2704838@N20"
             },
             {
                 "nsid": "2704838@N20",
                 "name": "! !^Good Morning Happiness Level 2",
                 "commentMatch": "Good Morning Happiness Level 2",
-                "commentCount": 5,
-                "secondChanceCount": 3,
                 "nextGroup": "2761151@N21"
             },
             {
                 "nsid": "2761151@N21",
                 "name": "! !^Good Morning Happiness Level 3",
                 "commentMatch": "Good Morning Happiness Level 3",
-                "commentCount": 5,
-                "secondChanceCount": 3
             }
         ]
     },
     {
         "name": "DSLR Autofocus",
-        "groups":[
+        "commentCount": 5,
+        "secondChanceCount": 3,
+        "groups": [
             {
                 "nsid": "3208450@N22",
                 "name": "DSLR Autofocus Level 1",
                 "commentMatch": "Seen in DSLR Autofocus Level 1",
-                "commentCount": 5,
-                "secondChanceCount": 3,
                 "nextGroup": "3110754@N23"
             },
             {
                 "nsid": "3110754@N23",
                 "name": "DSLR Autofocus Level 2",
                 "commentMatch": "Seen in DSLR Autofocus Level 2",
-                "commentCount": 5,
-                "secondChanceCount": 3,
                 "nextGroup": "3069304@N24"
             },
             {
                 "nsid": "3069304@N24",
                 "name": "DSLR Autofocus Level 3",
                 "commentMatch": "Seen in DSLR Autofocus Level 3",
-                "commentCount": 5,
-                "secondChanceCount": 3,
                 "nextGroup": "3062455@N20"
             },
             {
                 "nsid": "3062455@N20",
                 "name": "DSLR Autofocus Level 4",
                 "commentMatch": "Seen in DSLR Autofocus Level 4",
-                "commentCount": 5,
-                "secondChanceCount": 3,
                 "nextGroup": "3080976@N20"
             },
             {
                 "nsid": "3080976@N20",
                 "name": "DSLR Autofocus Level 5",
                 "commentMatch": "Seen in DSLR Autofocus Level 5",
-                "commentCount": 5,
-                "secondChanceCount": 3,
                 "nextGroup": "3110784@N23"
             },
             {
                 "nsid": "3110784@N23",
                 "name": "DSLR Autofocus Level 6",
                 "commentMatch": "Seen in DSLR Autofocus Level 6",
-                "commentCount": 5,
-                "secondChanceCount": 3,
                 "nextGroup": "3109106@N21"
             },
             {
                 "nsid": "3109106@N21",
                 "name": "DSLR Autofocus Level 7",
                 "commentMatch": "Seen in DSLR Autofocus Level 7",
-                "commentCount": 5,
-                "secondChanceCount": 3,
                 "nextGroup": "3145578@N22"
             },
             {
@@ -135,6 +115,92 @@
                 "name": "DSLR Grandmaster of Photography",
                 "commentMatch": "DSLR Master of photography",
                 "nextGroup": "END"
+            }
+        ]
+    },
+    {
+        "name": "Super Six",
+        "commentCount": 10,
+        "secondChanceCount": 5,
+        "groups": [
+            {
+                "nsid": "584572@N20",
+                "name": "Super~Six Bronze ☆ Stage #1 ☆ Post 1, Award 5.",
+                "commentMatch": "Super~Six Bronze",
+                "nextGroup": "583993@N20"
+            },
+            {
+                "nsid": "583993@N20",
+                "name": "Super~Six ☆ Stage #2 ☆ Silver. Post 1, Award 5. Invite Only",
+                "commentMatch": "Super~Six Silver",
+                "nextGroup": "584031@N20"
+            },
+            {
+                "nsid": "584031@N20",
+                "name": "Super~Six ☆ Stage #3 ☆ Gold. Post 1, Award 5. Invite Only",
+                "commentMatch": "Super~Six Gold",
+                "nextGroup": "642168@N22"
+            },
+            {
+                "nsid": "642168@N22",
+                "name": "Super~Six ☆ Stage #4 ☆ Art. Invite Only (P1/A5)",
+                "commentMatch": "Super~Six Art",
+                "nextGroup": "762863@N20"
+            },
+            {
+                "nsid": "762863@N20",
+                "name": "Super~Six ☆ Stage #5 ☆ Elite. Invite Only (P1/A5)",
+                "commentMatch": "Super~Six Elite",
+                "nextGroup": "894513@N25"
+            },
+            {
+                "nsid": "894513@N25",
+                "name": "Super~Six ☆ Stage #6 ☆ Andromeda \"50.\" Invite Only (P1/A5)",
+                "commentMatch": "Super~Six Andromeda",
+                "nextGroup": "END"
+            }
+        ]
+    },
+    {
+        "name": "THE LOOK",
+        "commentCount": 4,
+        "groups": [
+            {
+                "nsid": "1948260@N22",
+                "name": "THE LOOK level 1 RED",
+                "commentMatch": "4 RED POST GRUPO 2 LOOK YELLOW"
+            },
+            {
+                "nsid": "1899996@N20",
+                "name": "THE LOOK level 2 YELLOW",
+                "commentMatch": "4 YELLOW POST GRUPO 3 LOOK ORANGE"
+            },
+            {
+                "nsid": "1888344@N24",
+                "name": "THE LOOK level 3 ORANGE",
+                "commentMatch": "4 ORANGE POST GRUPO 4 LOOK PURPLE"
+            },
+            {
+                "nsid": "1929816@N23",
+                "name": "THE LOOK level 4 PURPLE",
+                "commentMatch": "4 PURPLE POST GRUPO 5 LOOK GREEN"
+            },
+            {
+                "nsid": "1877529@N25",
+                "name": "THE LOOK level 5 GREEN",
+                "commentMatch": "4 GREEN POST GRUPO 6 LOOK BLUE"
+            },
+            {
+                "nsid": "1952408@N22",
+                "name": "THE LOOK level 6 BLUE",
+                "commentMatch": "8 BLUE POST GRUPO 7 LOOK WHITE",
+                "commentCount": 8
+            },
+            {
+                "nsid": "1888378@N24",
+                "name": "THE LOOK level 7 WHITE",
+                "commentMatch": "10 WHITE POST GRUPO 8 LOOK GOLD",
+                "commentCount": 10
             }
         ]
     }

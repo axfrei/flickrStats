@@ -1,14 +1,17 @@
 export interface GroupFamlily {
     name: string;
+    disabled?: boolean;
+    commentCount?: number;
+    secondChanceCount?: number;
     groups: GroupDefinition[];
 }
 
 export interface GroupDefinition {
     name: string;
     commentMatch: string;
-    commentCount: number;
-    secondChanceCount: number;
-    nextGroup: string;
+    commentCount?: number;
+    secondChanceCount?: number;
+    nextGroup?: string;
 }
 
 export interface PhotoSuggestion {

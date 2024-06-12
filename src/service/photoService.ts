@@ -2,7 +2,7 @@ import { createFlickr } from "flickr-sdk"
 import { isEmpty } from 'lodash';
 import groupFamilies from '../assets/groups.json';
 import { NodeCacheTs } from 'node-cache-ts';
-import { PhotoSuggestion } from "../types/types";
+import { GroupFamlily, PhotoSuggestion } from "../types/types";
 
 const { flickr } = createFlickr("d3dfe4509e2631a6b7ced57f4c0f7745")
 
@@ -65,53 +65,59 @@ export const getPublicGroups = async (user_id: string) => {
 
 export const suggestActions = async (user_id: string = '21856482@N05') => {
     const suggestions = {};
-    for (const groupFamily of groupFamilies) {
+    for (const groupFamily of groupFamilies.filter((gf: GroupFamlily) => !gf.disabled)) {
         console.log(`Checking group family ${groupFamily.name}`)
         const level0 = groupFamily.groups[0];
-        const photos = await getPublicPhotosOfGroup(user_id, level0.nsid);
-        for await (const photo of photos) {
-            const { comments } = await getPhotoComments(photo.id);
-            const { pool } = await getAllContexts(photo.id);
-            const photoSuggestion: PhotoSuggestion = suggestions[photo.id] || {
-                id: photo.id,
-                title: photo.title,
-                url: `https://www.flickr.com/photos/${photo.owner}/${photo.id}`,
-                suggestions: []
-             }
-             photoSuggestion.suggestions = [...photoSuggestion.suggestions, ...meetRules(comments, level0, pool, photo, groupFamily)];
-             !isEmpty(photoSuggestion.suggestions) && (suggestions[photo.id] = photoSuggestion);
-        };
+        try {
+            const photos = await getPublicPhotosOfGroup(user_id, level0.nsid);
+            for await (const photo of photos) {
+                const { comments } = await getPhotoComments(photo.id);
+                const { pool } = await getAllContexts(photo.id);
+                const photoSuggestion: PhotoSuggestion = suggestions[photo.id] || {
+                    id: photo.id,
+                    title: photo.title,
+                    url: `https://www.flickr.com/photos/${photo.owner}/${photo.id}`,
+                    suggestions: []
+                }
+                photoSuggestion.suggestions = [...photoSuggestion.suggestions, ...meetRules(comments, 0, pool, photo, groupFamily)];
+                !isEmpty(photoSuggestion.suggestions) && (suggestions[photo.id] = photoSuggestion);
+            };
+        } catch (e) {
+            console.log(e);
+        }
     }
 
     return suggestions;
 
 }
 
-const meetRules = (comments, group, pool, photo, groupFamily, suggestions = []) => {
-    if(group.nextGroup === 'END') {
+const meetRules = (comments, groupIndex, pool, photo, groupFamily, suggestions = []) => {
+    const group = groupFamily.groups[groupIndex];
+    if (group === undefined || group.nextGroup === 'END') {
         return suggestions;
     }
-    
+
+    const nextGroup = group.nextGroup || groupFamily.groups[groupIndex + 1]?.nsid;
     const photoGroupComments = comments.comment.filter(comment => comment._content.search(group.commentMatch) >= 0);
-    const meetRuleMinCommentCount = photoGroupComments && photoGroupComments.length >= group.commentCount;
-    const meetSecondChance = !meetRuleMinCommentCount && photoGroupComments && photoGroupComments.length >= group.secondChanceCount;
-    const meetRuleNotAlreadyInNextGroup = pool.find(pool => pool.id === group.nextGroup) === undefined;
+    const meetRuleMinCommentCount = photoGroupComments && photoGroupComments.length >= (group.commentCount || groupFamily.commentCount);
+    const meetSecondChance = !meetRuleMinCommentCount && photoGroupComments && photoGroupComments.length >= (group.secondChanceCount || groupFamily.secondChanceCount || 1000000);
+    const meetRuleNotAlreadyInNextGroup = pool.find(pool => pool.id === nextGroup) === undefined;
 
 
     if (meetRuleMinCommentCount && meetRuleNotAlreadyInNextGroup) {
         suggestions.push(
-            !isEmpty(group.nextGroup) ? `Promote to ${groupFamily.groups.find(g => g.nsid === group.nextGroup).name}` : `Please check ${groupFamily.name}`
+            !isEmpty(nextGroup) ? `Promote to ${groupFamily.groups.find(g => g.nsid === nextGroup).name}` : `Please check ${groupFamily.name}`
         )
     }
 
-    if(meetSecondChance) {
+    if (meetSecondChance) {
         suggestions.push(`Post to second chance to ${group.name}`)
     }
 
-    if (meetRuleMinCommentCount && !meetRuleNotAlreadyInNextGroup && !isEmpty(group.nextGroup)) {
+    if (meetRuleMinCommentCount && !meetRuleNotAlreadyInNextGroup && !isEmpty(nextGroup)) {
         console.log(`Photo ${photo.id} completes group ${group.name}`)
-        const nextGroup = groupFamily.groups.find(g => g.nsid === group.nextGroup)
-        return meetRules(comments, nextGroup, pool, photo, groupFamily, suggestions)
+        const nextGroupIndex = group.nextGroup ? groupFamily.groups.findIndex(g => g.nsid === group.nextGroup) : groupIndex + 1;
+        return meetRules(comments, nextGroupIndex, pool, photo, groupFamily, suggestions)
     }
 
     return suggestions;
