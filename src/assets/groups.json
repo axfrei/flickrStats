@@ -1,8 +1,13 @@
 [
     {
         "name": "! !^A Little Bit of Soap",
-        "commentCount": 5,
-        "secondChanceCount": 3,
+        "promoteRule": {
+            "name": "commentCount",
+            "params": {
+                "commentCount": 5,
+                "secondChanceCount": 3
+            }
+        },
         "groups": [
             {
                 "nsid": "1167706@N24",
@@ -20,13 +25,30 @@
                 "nsid": "2769605@N21",
                 "name": "! !^A Little Bit of Soap Level 3",
                 "commentMatch": "Seen in A Little Bit Of Soap Level 3",
+                "promoteRule": {
+                    "name": "familyGroupCommentsCount",
+                    "params": {
+                        "commentCount": 25,
+                        "secondChanceCount": 20
+                    }
+                }
+            },
+            {
+                "nsid": "2755949@N22",
+                "name": "!!^Walking Towards Heaven ☰The Vernissage☰",
+                "commentMatch": ""
             }
         ]
     },
     {
         "name": "! !^Good Morning Happiness",
-        "commentCount": 5,
-        "secondChanceCount": 3,
+        "promoteRule": {
+            "name": "commentCount",
+            "params": {
+                "commentCount": 5,
+                "secondChanceCount": 3
+            }
+        },
         "groups": [
             {
                 "nsid": "1037442@N22",
@@ -44,13 +66,30 @@
                 "nsid": "2761151@N21",
                 "name": "! !^Good Morning Happiness Level 3",
                 "commentMatch": "Good Morning Happiness Level 3",
+                "promoteRule": {
+                    "name": "familyGroupCommentsCount",
+                    "params": {
+                        "commentCount": 25,
+                        "secondChanceCount": 20
+                    }
+                }
+            },
+            {
+                "nsid": "2755949@N22",
+                "name": "!!^Walking Towards Heaven ☰The Vernissage☰",
+                "commentMatch": ""
             }
         ]
     },
     {
         "name": "DSLR Autofocus",
-        "commentCount": 5,
-        "secondChanceCount": 3,
+        "promoteRule": {
+            "name": "commentCount",
+            "params": {
+                "commentCount": 5,
+                "secondChanceCount": 3
+            }
+        },
         "groups": [
             {
                 "nsid": "3208450@N22",
@@ -98,16 +137,26 @@
                 "nsid": "3145578@N22",
                 "name": "DSLR Autofocus Hall of Fame",
                 "commentMatch": "Seen in DSLR Autofocus Hall of Fame",
-                "commentCount": 10,
-                "secondChanceCount": 8,
+                "promoteRule": {
+                    "name": "commentCount",
+                    "params": {
+                        "commentCount": 10,
+                        "secondChanceCount": 8
+                    }
+                },
                 "nextGroup": "4177907@N24"
             },
             {
                 "nsid": "4177907@N24",
                 "name": "DSLR Autofocus MASTER OF PHOTOGRAPHY",
                 "commentMatch": "DSLR Master of photography",
-                "commentCount": 10,
-                "secondChanceCount": 8,
+                "promoteRule": {
+                    "name": "commentCount",
+                    "params": {
+                        "commentCount": 10,
+                        "secondChanceCount": 8
+                    }
+                },
                 "nextGroup": "2938321@N23"
             },
             {
@@ -120,8 +169,13 @@
     },
     {
         "name": "Super Six",
-        "commentCount": 10,
-        "secondChanceCount": 5,
+        "promoteRule": {
+            "name": "commentCount",
+            "params": {
+                "commentCount": 10,
+                "secondChanceCount": 5
+            }
+        },
         "groups": [
             {
                 "nsid": "584572@N20",
@@ -163,7 +217,12 @@
     },
     {
         "name": "THE LOOK",
-        "commentCount": 4,
+        "promoteRule": {
+            "name": "commentCount",
+            "params": {
+                "commentCount": 4
+            }
+        },
         "groups": [
             {
                 "nsid": "1948260@N22",
@@ -194,32 +253,45 @@
                 "nsid": "1952408@N22",
                 "name": "THE LOOK level 6 BLUE",
                 "commentMatch": "8 BLUE POST GRUPO 7 LOOK WHITE",
-                "commentCount": 8
+                "promoteRule": {
+                    "name": "commentCount",
+                    "params": {
+                        "commentCount": 8
+                    }
+                }
             },
             {
                 "nsid": "1888378@N24",
                 "name": "THE LOOK level 7 WHITE",
                 "commentMatch": "10 WHITE POST GRUPO 8 LOOK GOLD",
-                "commentCount": 10
+                "promoteRule": {
+                    "name": "commentCount",
+                    "params": {
+                        "commentCount": 10
+                    }
+                }
             }
         ]
     },
     {
         "name": "! !^Exquisite Art 50+ Faves",
-        "commentCount": 5,
-        "secondChanceCount": 3,
+        "promoteRule": {
+            "name": "commentCount",
+            "params": {
+                "commentCount": 5,
+                "secondChanceCount": 3
+            }
+        },
         "groups": [
             {
                 "nsid": "1232789@N22",
                 "name": "! !^Exquisite Art 50+ Faves (Level 1)",
-                "commentMatch": " Exquisite Art 50+ Faves"
-                
+                "commentMatch": "Exquisite Art 50+ Faves"
             },
             {
                 "nsid": "2278336@N21",
                 "name": "! !^Exquisite Art 50+ Faves (Level 2) Gallery of MasterWorks",
                 "commentMatch": "Exquisite Art Gallery of MasterWorks"
-                
             },
             {
                 "nsid": "2253778@N20",

@@ -1,16 +1,23 @@
 export interface GroupFamlily {
     name: string;
     disabled?: boolean;
-    commentCount?: number;
-    secondChanceCount?: number;
+    promoteRule?: PromoteRule;
     groups: GroupDefinition[];
 }
 
+export interface PromoteRule {
+    name: string;
+    params: {
+        commentCount?: number;
+        secondChanceCount?: number;
+    }
+}
+
 export interface GroupDefinition {
+    nsid: string;
     name: string;
     commentMatch: string;
-    commentCount?: number;
-    secondChanceCount?: number;
+    promoteRule?: PromoteRule;
     nextGroup?: string;
 }
 
