@@ -4,7 +4,12 @@ import groupFamilies from '../assets/groups.json';
 import { NodeCacheTs } from 'node-cache-ts';
 import { GroupFamlily, PhotoSuggestion } from "../types/types";
 
-const { flickr } = createFlickr("d3dfe4509e2631a6b7ced57f4c0f7745")
+const { flickr } = createFlickr({
+    consumerKey: process.env.FLICKR_CONSUMER_KEY,
+    consumerSecret: process.env.FLICKR_CONSUMER_SECRET,
+    oauthToken: process.env.FLICKR_OAUTH_TOKEN,
+    oauthTokenSecret: process.env.FLICKR_OAUTH_SECRET
+})
 
 export const getPhotoInfo = async (photo_id: string) => {
     const res = await flickr("flickr.photos.getInfo", {

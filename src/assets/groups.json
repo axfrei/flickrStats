@@ -203,5 +203,29 @@
                 "commentCount": 10
             }
         ]
+    },
+    {
+        "name": "! !^Exquisite Art 50+ Faves",
+        "commentCount": 5,
+        "secondChanceCount": 3,
+        "groups": [
+            {
+                "nsid": "1232789@N22",
+                "name": "! !^Exquisite Art 50+ Faves (Level 1)",
+                "commentMatch": " Exquisite Art 50+ Faves"
+                
+            },
+            {
+                "nsid": "2278336@N21",
+                "name": "! !^Exquisite Art 50+ Faves (Level 2) Gallery of MasterWorks",
+                "commentMatch": "Exquisite Art Gallery of MasterWorks"
+                
+            },
+            {
+                "nsid": "2253778@N20",
+                "name": "! !^Exquisite Art 50+ Faves (Level 3) Hall of Fame",
+                "commentMatch": "Exquisite Art Hall of Fame!!!"
+            }
+        ]
     }
 ]
