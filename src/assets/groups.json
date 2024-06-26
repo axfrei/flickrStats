@@ -173,44 +173,65 @@
             "name": "commentCount",
             "params": {
                 "commentCount": 10,
-                "secondChanceCount": 5
+                "secondChanceCount": 6
             }
         },
         "groups": [
             {
                 "nsid": "584572@N20",
                 "name": "Super~Six Bronze ☆ Stage #1 ☆ Post 1, Award 5.",
-                "commentMatch": "Super~Six Bronze",
-                "nextGroup": "583993@N20"
+                "commentMatchRegex": "(Super~Six)[\\s\\S]+(Bronze)",
+                "nextGroup": "583993@N20",
+                "promoteRule": {
+                    "name": "commentCount",
+                    "params": {
+                        "commentCount": 10,
+                        "secondChanceCount": 4
+                    }
+                }
             },
             {
                 "nsid": "583993@N20",
                 "name": "Super~Six ☆ Stage #2 ☆ Silver. Post 1, Award 5. Invite Only",
-                "commentMatch": "Super~Six Silver",
+                "commentMatchRegex": "(Super~Six)[\\s\\S]+(Silver)|(Flickr Silver Award)",
                 "nextGroup": "584031@N20"
             },
             {
                 "nsid": "584031@N20",
                 "name": "Super~Six ☆ Stage #3 ☆ Gold. Post 1, Award 5. Invite Only",
-                "commentMatch": "Super~Six Gold",
+                "commentMatchRegex": "(Super~Six)[\\s\\S]+(Gold)",
                 "nextGroup": "642168@N22"
             },
             {
                 "nsid": "642168@N22",
                 "name": "Super~Six ☆ Stage #4 ☆ Art. Invite Only (P1/A5)",
-                "commentMatch": "Super~Six Art",
-                "nextGroup": "762863@N20"
+                "commentMatchRegex": "(Super~Six)[\\s\\S]+(Art)|(Your Art has touched the World!)",
+                "nextGroup": "762863@N20",
+                "promoteRule": {
+                    "name": "commentCount",
+                    "params": {
+                        "commentCount": 10,
+                        "secondChanceCount": 8
+                    }
+                }
             },
             {
                 "nsid": "762863@N20",
                 "name": "Super~Six ☆ Stage #5 ☆ Elite. Invite Only (P1/A5)",
-                "commentMatch": "Super~Six Elite",
-                "nextGroup": "894513@N25"
+                "commentMatchRegex": "(Super~Six)[\\s\\S]+(Elite)|(Universal Elite)",
+                "nextGroup": "894513@N25",
+                "promoteRule": {
+                    "name": "commentCount",
+                    "params": {
+                        "commentCount": 10,
+                        "secondChanceCount": 8
+                    }
+                }
             },
             {
                 "nsid": "894513@N25",
                 "name": "Super~Six ☆ Stage #6 ☆ Andromeda \"50.\" Invite Only (P1/A5)",
-                "commentMatch": "Super~Six Andromeda",
+                "commentMatchRegex": "(Super~Six)[\\s\\S]+(Andromeda)|(Andromeda)",
                 "nextGroup": "END"
             }
         ]
@@ -269,7 +290,8 @@
                     "params": {
                         "commentCount": 10
                     }
-                }
+                },
+                "nextGroup": "END"
             }
         ]
     },

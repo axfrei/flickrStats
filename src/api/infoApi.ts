@@ -1,5 +1,5 @@
-import {Express, Request, Response} from 'express';
-import { getPhotoInfo, getPhotoComments, getAllContexts, suggestActions, getPublicPhotos, getPublicGroups } from '../service/photoService';
+import { Express, Request, Response } from 'express';
+import { getAllContexts, getPhotoComments, getPhotoInfo, getPublicGroups, getPublicPhotos, suggestActions } from '../service/photoService';
 
 const infoApi = (app: Express) => {
     app.get('/info', async (req: Request, res: Response) => {
@@ -45,7 +45,9 @@ const infoApi = (app: Express) => {
     })
 
     app.get('/suggestActions', async (req: Request, res: Response) => {
-        const info = await suggestActions();
+        const familyGroups = req.query.fg && (req.query.fg as string).split(',');
+        const photos_id = req.query.photos_id && (req.query.photos_id as string).split(',');
+        const info = await suggestActions({familyGroups, photos_id});
         res.send(JSON.stringify(info));
     });
 } 

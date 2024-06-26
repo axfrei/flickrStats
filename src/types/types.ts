@@ -14,9 +14,10 @@ export interface PromoteRule {
 }
 
 export interface GroupDefinition {
+    commentMatchRegex?: string;
     nsid: string;
     name: string;
-    commentMatch: string;
+    commentMatch?: string;
     promoteRule?: PromoteRule;
     nextGroup?: string;
 }

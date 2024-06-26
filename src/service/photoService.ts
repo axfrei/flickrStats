@@ -1,8 +1,8 @@
-import { createFlickr } from "flickr-sdk"
+import { createFlickr } from "flickr-sdk";
 import { isEmpty } from 'lodash';
-import groupFamilies from '../assets/groups.json';
 import { NodeCacheTs } from 'node-cache-ts';
-import { GroupFamlily, PhotoSuggestion, PromoteRule } from "../types/types";
+import groupFamilies from '../assets/groups.json';
+import { GroupDefinition, GroupFamlily, PhotoSuggestion, PromoteRule } from "../types/types";
 
 const { flickr } = createFlickr({
     consumerKey: process.env.FLICKR_CONSUMER_KEY,
@@ -68,14 +68,15 @@ export const getPublicGroups = async (user_id: string) => {
     return res;
 }
 
-export const suggestActions = async (user_id: string = '21856482@N05') => {
+export const suggestActions = async (params) => {
+    const { user_id = '21856482@N05', familyGroups = [], photos_id = [] } =  params
     const suggestions = {};
-    for (const groupFamily of groupFamilies.filter((gf: GroupFamlily) => !gf.disabled)) {
+    for (const groupFamily of groupFamilies.filter((gf: GroupFamlily) => !gf.disabled && (isEmpty(familyGroups) || familyGroups.includes(gf.name)))) {
         console.log(`Checking group family ${groupFamily.name}`)
         const level0 = groupFamily.groups[0];
         try {
             const photos = await getPublicPhotosOfGroup(user_id, level0.nsid);
-            for await (const photo of photos) {
+            for await (const photo of photos.filter(p => isEmpty(photos_id) || photos_id.includes(p.id) )) {
                 const { comments } = await getPhotoComments(photo.id);
                 const { pool } = await getAllContexts(photo.id);
                 const photoSuggestion: PhotoSuggestion = suggestions[photo.id] || {
@@ -116,11 +117,19 @@ const promoteRules = {
             const { photoGroupCommentsCount, familyGroupCommentsCount, promoteRuleParams } = opts;
             return photoGroupCommentsCount + familyGroupCommentsCount >= (promoteRuleParams.secondChanceCount || 1000000);
         }
+    },
+    favCount: {
+        meetPromoteRule: () => false,
+        meetSecondChanceRule: () => false
+    },
+    default: {
+        meetPromoteRule: () => false,
+        meetSecondChanceRule: () => false
     }
 }
 
 const meetPromoteRule = (photoGroupCommentsCount: number, familyGroupCommentsCount, promoteRule: PromoteRule) => {
-    const pr = promoteRules[promoteRule.name] || promoteRules.commentCount;
+    const pr = promoteRules[promoteRule.name] || promoteRules.default;
     return pr.meetPromoteRule({
         photoGroupCommentsCount,
         familyGroupCommentsCount,
@@ -129,7 +138,7 @@ const meetPromoteRule = (photoGroupCommentsCount: number, familyGroupCommentsCou
 }
 
 const meetSecondChanceRule = (photoGroupCommentsCount: number, familyGroupCommentsCount, promoteRule: PromoteRule) => {
-    const pr = promoteRules[promoteRule.name] || promoteRules.commentCount;
+    const pr = promoteRules[promoteRule.name] || promoteRules.default;
     return pr.meetSecondChanceRule({
         photoGroupCommentsCount,
         familyGroupCommentsCount,
@@ -144,9 +153,10 @@ const meetRules = (comments, groupIndex: number, pool, photo, groupFamily: Group
     }
 
     const nextGroup = group.nextGroup || groupFamily.groups[groupIndex + 1]?.nsid;
-    const photoGroupCommentsCount = comments.comment.filter(comment => comment._content.search(group.commentMatch) >= 0).length;
-    const meetPromoteRule_ = meetPromoteRule(photoGroupCommentsCount, groupFamilyCommentCount, group.promoteRule || groupFamily.promoteRule);
-    const meetSecondChanceRule_ = !meetPromoteRule_ && meetSecondChanceRule(photoGroupCommentsCount, groupFamilyCommentCount, group.promoteRule || groupFamily.promoteRule);
+    const photoGroupCommentsCount = comments.comment.filter((comment: {_content: string}) => contentMatchRule(comment._content, group)).length;
+    const promoteRule = group.promoteRule || groupFamily.promoteRule;
+    const meetPromoteRule_ = meetPromoteRule(photoGroupCommentsCount, groupFamilyCommentCount, promoteRule);
+    const meetSecondChanceRule_ = !meetPromoteRule_ && meetSecondChanceRule(photoGroupCommentsCount, groupFamilyCommentCount, promoteRule);
     const meetRuleNotAlreadyInNextGroup = pool.find(pool => pool.id === nextGroup) === undefined;
 
 
@@ -157,7 +167,7 @@ const meetRules = (comments, groupIndex: number, pool, photo, groupFamily: Group
     }
 
     if (meetSecondChanceRule_) {
-        suggestions.push(`Post to second chance to ${group.name}`)
+        suggestions.push(`Post to second chance to ${group.name}: ${promoteRule.name === 'familyGroupCommentsCount' ? groupFamilyCommentCount : photoGroupCommentsCount }/${(promoteRule).params.commentCount} `)
     }
 
     if (meetPromoteRule_ && !meetRuleNotAlreadyInNextGroup && !isEmpty(nextGroup)) {
@@ -167,4 +177,16 @@ const meetRules = (comments, groupIndex: number, pool, photo, groupFamily: Group
     }
 
     return suggestions;
+}
+
+function contentMatchRule(comment: string, group: GroupDefinition): boolean {
+    if(group.commentMatchRegex) {
+        return new RegExp(group.commentMatchRegex).test(comment);
+    }
+
+    if(group.commentMatch) {
+        return comment.search(group.commentMatch) >= 0
+    }
+
+    return false;
 }
