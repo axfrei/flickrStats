@@ -400,19 +400,19 @@
             {
                 "nsid": "14878775@N20",
                 "name": "Shoot For Fruit!! Level 1",
-                "commentMatch": "shootforfruit1",
+                "commentMatch": "shootforfruit1/\" title=\"Level 1 Award",
                 "nextGroup": "14878780@N20"
             },
             {
                 "nsid": "14878780@N20",
                 "name": "Shoot For Fruit!! Level 2",
-                "commentMatch": "shootforfruit2",
+                "commentMatch": "shootforfruit2/\" title=\"Level 2 Award",
                 "nextGroup": "14878572@N20"
             },
             {
                 "nsid": "14878572@N20",
                 "name": "Shoot For Fruit!! Level 3",
-                "commentMatch": "shootforfruit3"
+                "commentMatch": "shootforfruit3/\" title=\"Level 3 Award"
             }
         ]
     }

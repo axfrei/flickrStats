@@ -2,10 +2,9 @@ import { createFlickr } from "flickr-sdk";
 import { isEmpty } from 'lodash';
 import { NodeCacheTs } from 'node-cache-ts';
 import groupFamilies from '../assets/groups.json';
-import { GroupDefinition, GroupFamlily, PhotoData, PhotoSuggestion, PromoteRule } from "../types/suggestionEngine";
+import { GroupDefinition, GroupFamlily, PhotoSuggestion, PromoteRule } from "../types/suggestionEngine";
 import { PhotoStatus } from "../db";
-import { getFips } from "node:crypto";
-import { IFamilyGroup, IPhotoStatus } from "../types/photoStatus";
+import { IPhotoStatus } from "../types/photoStatus";
 
 const { flickr } = createFlickr({
     consumerKey: process.env.FLICKR_CONSUMER_KEY,
@@ -33,6 +32,11 @@ const photoSizesCache = new NodeCacheTs<{ photo_id: string }, any>({ stdTTL: 600
         photo_id: args.photo_id
     });
 });
+
+const photoStatusCache = new NodeCacheTs<{ photo_id: string }, any>({ stdTTL: 600 }, async (args: { photo_id: string }): Promise<any> => {
+    return await getPhotoStatusFromDb(args.photo_id);
+});
+
 
 export const getPhotoComments = (photo_id: string) => {
     return photoCommentsCache.call(photo_id, { photo_id });
@@ -81,6 +85,10 @@ export const getPhotoSizes = (photo_id: string) => {
    return photoSizesCache.call(photo_id, {photo_id});
 }
 
+const getPhotoStatus = async (photo_id: string) => {
+    return photoStatusCache.call(photo_id, { photo_id });
+ }
+
 export const suggestActions = async (params) => {
     const { user_id = '21856482@N05', familyGroups = [], photos_id = [] } =  params
     const suggestions = {};
@@ -90,7 +98,7 @@ export const suggestActions = async (params) => {
         try {
             const photos = await getPublicPhotosOfGroup(user_id, level0.nsid);
             for await (const photo of photos.filter(p => isEmpty(photos_id) || photos_id.includes(p.id) )) {
-                const photoCurrentStatus:IPhotoStatus = await getPhotoStatus(photo);
+                const photoCurrentStatus:IPhotoStatus = await getPhotoStatus(photo.id);
                 const { comments } = await getPhotoComments(photo.id);
                 const { pool } = await getAllContexts(photo.id);
                 const photoSuggestion: PhotoSuggestion = suggestions[photo.id] || {
@@ -214,7 +222,7 @@ const meetRules = async (props: {comments: any, groupIndex: number, pool: any, p
             groups: {
                 ...photoCurrentStatus.groups,
                 [groupFamily.name]: {
-                    currentLevel: groupIndex
+                    currentLevel: nextGroupIndex
                 }
             }
         }
@@ -246,11 +254,14 @@ function contentMatchRule(comment: string, group: GroupDefinition): boolean {
     return false;
 }
 
-async function getPhotoStatus(photoData: PhotoData) {
-    let photoStatus = await PhotoStatus.findById(photoData.id).lean().exec();
+
+
+async function getPhotoStatusFromDb(photo_id: string) {
+    const id = new String(photo_id)
+    let photoStatus = await PhotoStatus.findById(id).lean().exec();
     if(!photoStatus) {
-        await PhotoStatus.create({_id: photoData.id});
-        photoStatus = await PhotoStatus.findById(photoData.id).lean().exec();
+        await PhotoStatus.create({_id: id});
+        photoStatus = await PhotoStatus.findById(id).lean().exec();
     }
 
     return photoStatus;
@@ -258,6 +269,7 @@ async function getPhotoStatus(photoData: PhotoData) {
 
 async function setPhotoStatus(photoCurrentStatus: IPhotoStatus) {
     await PhotoStatus.updateOne({_id: photoCurrentStatus._id}, {$set: {groups: 
-        photoCurrentStatus.groups}}).exec()
+        photoCurrentStatus.groups}}).exec();
+    await photoStatusCache.set(photoCurrentStatus._id.toString(), photoCurrentStatus, 600);
 }
 
