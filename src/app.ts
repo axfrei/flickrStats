@@ -1,31 +1,46 @@
-import express, {Express} from 'express';
+import cors from 'cors';
+import * as dotenv from "dotenv";
+import express, { Express } from 'express';
+import fs from 'node:fs';
 import https from 'node:https';
 import infoApi from './api/infoApi';
 import oauthApi from './api/oauthApi';
-import fs from 'node:fs';
-import * as dotenv from "dotenv";
+import { connectToDb } from './db';
 
 dotenv.config();
+
 
 const app: Express = express();
 const port = 3000;
 
+const start = async () => {
+  try {
 
+    await connectToDb();
 
-const options = {
-  key: fs.readFileSync( './flickrStats+4-key.pem' ),
-  cert: fs.readFileSync( './flickrStats+4.pem' )
-}
+    app.use(cors());
 
-const server = https.createServer(options, app).listen(port, function(){
-  console.log("Express server listening on port " + port);
-});
+    const options = {
+      key: fs.readFileSync('./localhost+2-key.pem'),
+      cert: fs.readFileSync('./localhost+2.pem')
+    }
 
-app.get('/test', function (req, res) {
-  res.writeHead(200);
-  res.end("hello world\n");
-});
+    const server = https.createServer(options, app).listen(port, function () {
+      console.log("Express server listening on port " + port);
+    });
 
-oauthApi(app);
+    app.get('/test', function (req, res) {
+      res.writeHead(200);
+      res.end("hello world\n");
+    });
 
-infoApi(app);
+    oauthApi(app);
+
+    infoApi(app);
+  } catch (error) {
+    console.error(error);
+    process.exit(1);
+  }
+};
+
+start();

@@ -180,7 +180,7 @@
             {
                 "nsid": "584572@N20",
                 "name": "Super~Six Bronze ☆ Stage #1 ☆ Post 1, Award 5.",
-                "commentMatchRegex": "(Super~Six)[\\s\\S]+(Bronze)",
+                "commentMatchRegex": "(Super~Six)[\\s\\S]+(Bronze)|(Flickr Bronze Award)",
                 "nextGroup": "583993@N20",
                 "promoteRule": {
                     "name": "commentCount",
@@ -199,7 +199,7 @@
             {
                 "nsid": "584031@N20",
                 "name": "Super~Six ☆ Stage #3 ☆ Gold. Post 1, Award 5. Invite Only",
-                "commentMatchRegex": "(Super~Six)[\\s\\S]+(Gold)",
+                "commentMatchRegex": "(Super~Six)[\\s\\S]+(Gold)|(Flickr Gold Award)",
                 "nextGroup": "642168@N22"
             },
             {
@@ -296,7 +296,7 @@
         ]
     },
     {
-        "name": "! !^Exquisite Art 50+ Faves",
+        "name": "Exquisite Art 50",
         "promoteRule": {
             "name": "commentCount",
             "params": {
@@ -308,17 +308,111 @@
             {
                 "nsid": "1232789@N22",
                 "name": "! !^Exquisite Art 50+ Faves (Level 1)",
-                "commentMatch": "Exquisite Art 50+ Faves"
-            },
+                "commentMatch": "Exquisite Art 50+ Faves",
+                "nextGroup": "2278336@N21"
+            }, 
             {
                 "nsid": "2278336@N21",
                 "name": "! !^Exquisite Art 50+ Faves (Level 2) Gallery of MasterWorks",
-                "commentMatch": "Exquisite Art Gallery of MasterWorks"
+                "commentMatch": "Exquisite Art Gallery of MasterWorks",
+                "nextGroup": "2253778@N20"
             },
             {
                 "nsid": "2253778@N20",
                 "name": "! !^Exquisite Art 50+ Faves (Level 3) Hall of Fame",
                 "commentMatch": "Exquisite Art Hall of Fame!!!"
+            }
+        ]
+    },
+    {
+        "name": "! ! Flickr Active’s TOP photos",
+        "promoteRule": {
+            "name": "commentCount",
+            "params": {
+                "commentCount": 4
+            }
+        },
+        "groups": [
+            {
+                "nsid": "14596510@N24",
+                "name": "! ! Flickr Active’s TOP photos – Level 1, P1/F+A3",
+                "commentMatch": "Flickr Active’s TOP photos – Level 1",
+                "nextGroup": "14585762@N25"
+            },
+            {
+                "nsid": "14585762@N25",
+                "name": "! Flickr Active’s TOP photos – Level 2: the Excellent P1/F+A",
+                "commentMatch": "Flickr Active’s TOP photos – Level 2: the Excellent",
+                "promoteRule": {
+                    "name": "familyGroupCommentsCount",
+                    "params": {
+                        "commentCount": 8
+                    }
+                },
+                "nextGroup": "14633397@N21"
+            },
+            {
+                "nsid": "14633397@N21",
+                "name": "! Flickr Active’s TOP photos – Level 3: the Super, P1/F+A3",
+                "commentMatch": "Flickr Active’s TOP photos – Level 3: the Super",
+                "promoteRule": {
+                    "name": "familyGroupCommentsCount",
+                    "params": {
+                        "commentCount": 12
+                    }
+                },
+                "nextGroup": "14608448@N20"
+            },
+            {
+                "nsid": "14608448@N20",
+                "name": "! Flickr Active’s TOP photos – Level 4: the Supreme, P1/F+A3",
+                "commentMatch": "Flickr Active’s TOP photos – Level 4: the Super",
+                "promoteRule": {
+                    "name": "familyGroupCommentsCount",
+                    "params": {
+                        "commentCount":16
+                    }
+                },
+                "nextGroup": "14633991@N21"
+            },
+            {
+                "nsid": "14633991@N21",
+                "name": "! Flickr Active’s TOP photos – Level 5: the Holy Grail",
+                "commentMatch": "Flickr Active’s TOP photos – Level 5: the Holy Grail",
+                "promoteRule": {
+                    "name": "familyGroupCommentsCount",
+                    "params": {
+                        "commentCount":20
+                    }
+                }
+            }
+        ]
+    },
+    {
+        "name": "Shoot For Fruit!!",
+        "promoteRule": {
+            "name": "commentCount",
+            "params": {
+                "commentCount": 4
+            }
+        },
+        "groups": [
+            {
+                "nsid": "14878775@N20",
+                "name": "Shoot For Fruit!! Level 1",
+                "commentMatch": "shootforfruit1",
+                "nextGroup": "14878780@N20"
+            },
+            {
+                "nsid": "14878780@N20",
+                "name": "Shoot For Fruit!! Level 2",
+                "commentMatch": "shootforfruit2",
+                "nextGroup": "14878572@N20"
+            },
+            {
+                "nsid": "14878572@N20",
+                "name": "Shoot For Fruit!! Level 3",
+                "commentMatch": "shootforfruit3"
             }
         ]
     }

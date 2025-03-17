@@ -34,3 +34,18 @@ export interface Suggestion {
     suggestion: string;
     groupUrl: string;
 }
+
+
+export interface PhotoData {
+    dateadded: String;
+    farm: number;
+    id: String;
+    isfamily: number;
+    isfriend: number;
+    ispublic: number;
+    owner: String;
+    ownername: String;
+    secret: String;
+    server: String;
+    title: String;
+}
