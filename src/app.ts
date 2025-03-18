@@ -11,7 +11,7 @@ dotenv.config();
 
 
 const app: Express = express();
-const port = 3000;
+const port = process.env.PORT || 3000;
 
 const start = async () => {
   try {
@@ -25,7 +25,7 @@ const start = async () => {
       cert: fs.readFileSync('./localhost+2.pem')
     }
 
-    const server = https.createServer(options, app).listen(port, '0.0.0.0', function () {
+    const server = https.createServer(options, app).listen(Number(port), '0.0.0.0', function () {
       console.log("Express server listening on port " + port);
     });
 
