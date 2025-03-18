@@ -6,7 +6,8 @@
     "tsc": "tsc",
     "test": "echo \"Error: no test specified\" && exit 1",
     "build": "npm install; tsc",
-    "start": "node --env-file .env dist/app.js"
+    "start": "node dist/app.js",
+    "start:local": "node --env-file .env dist/app.js"
   },
   "keywords": [],
   "author": "",
