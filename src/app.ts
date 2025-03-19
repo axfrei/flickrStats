@@ -20,22 +20,20 @@ const start = async () => {
 
     app.use(cors());
 
-    // const options = {
-    //   key: fs.readFileSync('./localhost+2-key.pem'),
-    //   cert: fs.readFileSync('./localhost+2.pem')
-    // }
+    if (process.env.STAGE === 'LOCAL') {
+      const options = {
+        key: fs.readFileSync('./localhost+2-key.pem'),
+        cert: fs.readFileSync('./localhost+2.pem')
+      }
 
-    // const server = https.createServer(options, app).listen(Number(port), '0.0.0.0', function () {
-    //   console.log("Express server listening on port " + port);
-    // });
-    app.listen(port, () => {
-      console.log(`Example app listening on port ${port}`)
-    })
-
-    app.get('/test', function (req, res) {
-      res.writeHead(200);
-      res.end("hello world\n");
-    });
+      const server = https.createServer(options, app).listen(port, function () {
+        console.log("Express server listening on port " + port);
+      });
+    } else {
+      app.listen(port, () => {
+        console.log(`Express server listening on port ${port}`)
+      })
+    }
 
     oauthApi(app);
 
