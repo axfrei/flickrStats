@@ -101,7 +101,9 @@ export default class PhotoService {
                         groupFamilyCommentCount: 0,
                         photoCurrentStatus
                     })];
-                    !isEmpty(photoSuggestion.suggestions) && (suggestions[photo.id] = photoSuggestion);
+                    if (!isEmpty(photoSuggestion.suggestions)) {
+                        suggestions[photo.id] = photoSuggestion;
+                    }
                 };
             } catch (e) {
                 logger.error(e);

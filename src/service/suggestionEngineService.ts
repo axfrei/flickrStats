@@ -1,6 +1,6 @@
 import { isEmpty } from "lodash";
 import { IPhotoStatus } from "../types/photoStatus";
-import { GroupDefinition, GroupFamlily, PromoteRule } from "../types/suggestionEngine";
+import { GroupDefinition, GroupFamlily, IMeetRuleParams, PromoteRule } from "../types/suggestionEngine";
 import { PhotoStatusCache } from "./photoServiceCaches";
 import { PhotoStatus } from "../repository/db";
 import { logger } from "../logger";
@@ -94,8 +94,7 @@ export default class SuggestionEngineService {
         await this.photoStatusCache.set(photoCurrentStatus._id.toString(), photoCurrentStatus, 600);
     }
 
-    meetRules = async (props: { comments: any, groupIndex: number, pool: any, photo: any, groupFamily: GroupFamlily, groupFamilyCommentCount: number, suggestions?: string[], photoCurrentStatus: IPhotoStatus }) => {
-        const { comments, groupIndex, pool, photo, groupFamily, groupFamilyCommentCount, suggestions = [], photoCurrentStatus } = props;
+    meetRules = async ({ comments, groupIndex, pool, photo, groupFamily, groupFamilyCommentCount, suggestions = [], photoCurrentStatus }: IMeetRuleParams) => {
         const group = groupFamily.groups[groupIndex];
         if (group === undefined || group.nextGroup === 'END') {
             return suggestions;

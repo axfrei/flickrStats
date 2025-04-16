@@ -1,3 +1,5 @@
+import { IPhotoStatus } from "./photoStatus";
+
 export interface GroupFamlily {
     name: string;
     disabled?: boolean;
@@ -37,15 +39,26 @@ export interface Suggestion {
 
 
 export interface PhotoData {
-    dateadded: String;
+    dateadded: string;
     farm: number;
-    id: String;
+    id: string;
     isfamily: number;
     isfriend: number;
     ispublic: number;
-    owner: String;
-    ownername: String;
-    secret: String;
-    server: String;
-    title: String;
+    owner: string;
+    ownername: string;
+    secret: string;
+    server: string;
+    title: string;
+}
+
+export interface IMeetRuleParams {
+    comments: any;
+    groupIndex: number;
+    pool: any;
+    photo: any;
+    groupFamily: GroupFamlily;
+    groupFamilyCommentCount: number;
+    suggestions?: string[];
+    photoCurrentStatus: IPhotoStatus;
 }

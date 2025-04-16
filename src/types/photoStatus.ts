@@ -1,5 +1,5 @@
 export interface IPhotoStatus {
-    _id: String;
+    _id: string;
     groups: {
         [key: string]: IFamilyGroup
     }
@@ -7,12 +7,4 @@ export interface IPhotoStatus {
 
 export interface IFamilyGroup {
     currentLevel: number;
-    // levels: IGroup[];
-}
-
-interface IGroup {
-    id: String;
-    chainIndex: number;
-    complete: boolean;
-    postedSecondChange: boolean;
 }

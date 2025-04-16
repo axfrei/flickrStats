@@ -30,7 +30,7 @@ const start = async () => {
         cert: fs.readFileSync('./localhost+2.pem')
       }
 
-      const server = https.createServer(options, app).listen(port, function () {
+      https.createServer(options, app).listen(port, function () {
         logger.info("Express server listening on port " + port);
       });
     } else {

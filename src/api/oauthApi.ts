@@ -1,7 +1,7 @@
 import { Express, Request, Response } from 'express';
 import { createFlickr } from "flickr-sdk"
 
-var db = {
+const db = {
     users: new Map(),
     oauth: new Map(),
 }
