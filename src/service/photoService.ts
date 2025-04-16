@@ -5,16 +5,14 @@ import { GroupFamlily, PhotoSuggestion } from "../types/suggestionEngine";
 import { IPhotoStatus } from "../types/photoStatus";
 import { photoStatusCache, photoSizesCache, PhotoCommentsCache, PhotoContextCache } from './photoServiceCaches';
 import SuggestionEngingService from './suggestionEngineService';
-import logger, { Logger } from 'pino';
+import { logger } from '../logger';
 
 export default class PhotoService {
-    logger: Logger;
 
     constructor(private readonly suggestionEngineService: SuggestionEngingService,
         private readonly photoCommentsCache: PhotoCommentsCache,
         private readonly photoContextCache: PhotoContextCache
     ) {
-        this.logger = logger();
     }
 
     getPhotoInfo = async (photo_id: string) => {
@@ -75,7 +73,7 @@ export default class PhotoService {
         const suggestions = {};
         const groupsToCheck = groupFamilies.filter((gf: GroupFamlily) => !gf.disabled && (isEmpty(familyGroups) || familyGroups.includes(gf.name)));
         for (const groupFamily of groupsToCheck) {
-            this.logger.info(`Checking group family ${groupFamily.name}`)
+            logger.info(`Checking group family ${groupFamily.name}`)
             const level0 = groupFamily.groups[0];
             try {
                 const photos = (await this.getPublicPhotosOfGroup(user_id, level0.nsid)).filter(p => isEmpty(photos_id) || photos_id.includes(p.id));
@@ -106,7 +104,7 @@ export default class PhotoService {
                     !isEmpty(photoSuggestion.suggestions) && (suggestions[photo.id] = photoSuggestion);
                 };
             } catch (e) {
-                this.logger.error(e);
+                logger.error(e);
             }
         }
 

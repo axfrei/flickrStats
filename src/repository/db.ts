@@ -1,16 +1,13 @@
 import { Schema, model, connect } from 'mongoose';
 import { IPhotoStatus } from '../types/photoStatus'
-import logger, { Logger } from 'pino';
+import {logger} from '../logger';
 
-const MONGO_URI = `mongodb+srv://axelfreiria:${process.env.MONGO_PASS}@flickrsuggestapp.vhtqg.mongodb.net/?retryWrites=true&w=majority&appName=flickrSuggestApp`;
-const logger_: Logger = logger();
-
-export const connectToDb = () => connect(MONGO_URI)
+export const connectToDb = () => connect('mongodb+srv://flickrsuggestapp.vhtqg.mongodb.net/?retryWrites=true&w=majority&appName=flickrSuggestApp', { user: process.env.MONGO_USER, pass: process.env.MONGO_PASS})
   .then(() => {
-    logger_.info('Connected to MongoDB');
+    logger.info('Connected to MongoDB');
   })
   .catch((error) => {
-    logger_.error('Error connecting to MongoDB:', error);
+    logger.error('Error connecting to MongoDB: %s', error.message);
   });
 
 

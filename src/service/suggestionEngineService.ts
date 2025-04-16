@@ -3,11 +3,10 @@ import { IPhotoStatus } from "../types/photoStatus";
 import { GroupDefinition, GroupFamlily, PromoteRule } from "../types/suggestionEngine";
 import { PhotoStatusCache } from "./photoServiceCaches";
 import { PhotoStatus } from "../repository/db";
-import logger, {Logger} from 'pino';
+import { logger } from "../logger";
 
 export default class SuggestionEngineService {
     promoteRules: { commentCount: { meetPromoteRule: (opts: { photoGroupCommentsCount: number; familyGroupCommentsCount: number; promoteRuleParams: { commentCount: number; secondChanceCount: number; }; }) => boolean; meetSecondChanceRule: (opts: { photoGroupCommentsCount: number; familyGroupCommentsCount: number; promoteRuleParams: { commentCount: number; secondChanceCount: number; }; }) => boolean; }; familyGroupCommentsCount: { meetPromoteRule: (opts: { photoGroupCommentsCount: number; familyGroupCommentsCount: number; promoteRuleParams: { commentCount: number; secondChanceCount: number; }; }) => boolean; meetSecondChanceRule: (opts: { photoGroupCommentsCount: number; familyGroupCommentsCount: number; promoteRuleParams: { commentCount: number; secondChanceCount: number; }; }) => boolean; }; favCount: { meetPromoteRule: () => boolean; meetSecondChanceRule: () => boolean; }; default: { meetPromoteRule: () => boolean; meetSecondChanceRule: () => boolean; }; };
-    logger: Logger<never, boolean>;
 
     constructor(private readonly photoStatusCache: PhotoStatusCache) {
         this.promoteRules = {
@@ -40,7 +39,6 @@ export default class SuggestionEngineService {
                 meetSecondChanceRule: () => false
             }
         }
-        this.logger = logger();
     }
 
     private meetPromoteRule = (photoGroupCommentsCount: number, familyGroupCommentsCount, promoteRule: PromoteRule) => {
@@ -122,7 +120,7 @@ export default class SuggestionEngineService {
         }
 
         if (meetPromoteRule_ && !meetRuleNotAlreadyInNextGroup && !isEmpty(nextGroup)) {
-            this.logger.info(`Photo ${photo.id} completes group ${group.name}`)
+            logger.info(`Photo ${photo.id} completes group ${group.name}`)
             const nextGroupIndex = group.nextGroup ? groupFamily.groups.findIndex(g => g.nsid === group.nextGroup) : groupIndex + 1;
             await this.updatePhotoStatus(photoCurrentStatus, groupFamily, nextGroupIndex);
             return this.meetRules({
