@@ -5,13 +5,18 @@ import fs from 'node:fs';
 import https from 'node:https';
 import infoApi from './api/infoApi';
 import oauthApi from './api/oauthApi';
-import { connectToDb } from './db';
+import { connectToDb } from './repository/db';
+import { AppContainer } from './app/container';
+import loggerHttp, {HttpLogger} from 'pino-http';
+import logger, {Logger} from 'pino';
 
 dotenv.config();
 
-
 const app: Express = express();
+const photoService = AppContainer.getPhotoService();
 const port = process.env.PORT || 3000;
+const loggerHttp_:HttpLogger = loggerHttp();
+const logger_: Logger = logger();
 
 const start = async () => {
   try {
@@ -19,6 +24,7 @@ const start = async () => {
     await connectToDb();
 
     app.use(cors());
+    app.use(loggerHttp_);
 
     if (process.env.STAGE === 'LOCAL') {
       const options = {
@@ -27,17 +33,17 @@ const start = async () => {
       }
 
       const server = https.createServer(options, app).listen(port, function () {
-        console.log("Express server listening on port " + port);
+        logger_.info("Express server listening on port " + port);
       });
     } else {
       app.listen(port, () => {
-        console.log(`Express server listening on port ${port}`)
+        logger_.info(`Express server listening on port ${port}`)
       })
     }
 
     oauthApi(app);
 
-    infoApi(app);
+    infoApi(app, photoService);
   } catch (error) {
     console.error(error);
     process.exit(1);

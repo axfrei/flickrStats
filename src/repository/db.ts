@@ -1,14 +1,16 @@
 import { Schema, model, connect } from 'mongoose';
-import { IPhotoStatus } from './types/photoStatus'
+import { IPhotoStatus } from '../types/photoStatus'
+import logger, { Logger } from 'pino';
 
 const MONGO_URI = `mongodb+srv://axelfreiria:${process.env.MONGO_PASS}@flickrsuggestapp.vhtqg.mongodb.net/?retryWrites=true&w=majority&appName=flickrSuggestApp`;
+const logger_: Logger = logger();
 
 export const connectToDb = () => connect(MONGO_URI)
   .then(() => {
-    console.log('Connected to MongoDB');
+    logger_.info('Connected to MongoDB');
   })
   .catch((error) => {
-    console.error('Error connecting to MongoDB:', error);
+    logger_.error('Error connecting to MongoDB:', error);
   });
 
 

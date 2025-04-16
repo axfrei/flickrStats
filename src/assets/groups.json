@@ -415,5 +415,28 @@
                 "commentMatch": "shootforfruit3/\" title=\"Level 3 Award"
             }
         ]
+    },
+    {
+        "name": "!! Photographers Without Limits",
+        "promoteRule": {
+            "name": "commentCount",
+            "params": {
+                "commentCount": 4
+            }
+        },
+        "groups": [
+            {
+                "nsid": "679338@N25",
+                "name": "Shoot For Fruit!! Level 1",
+                "commentMatch": "!! Photographers Without Limits (P1, A+F5)",
+                "nextGroup": "14878780@N20"
+            },
+            {
+                "nsid": "679338@N25",
+                "name": "Shoot For Fruit!! Level 1",
+                "commentMatch": "54271895715_8f8b714cd2_b.jpg",
+                "nextGroup": "14878780@N20"
+            }
+        ]
     }
 ]
